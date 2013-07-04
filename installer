@@ -1,0 +1,36 @@
+if not http then
+	error("HTTP Required")
+end
+print("Would you like to install OpenOS[y/N]:")
+if os.pullEvent("char")[2] == "y" then
+	print("Installing...")
+	local url = "https://raw.github.com/OpenOS/OpenOS/master/"
+	local updaterinfo = http.get(url .. updaterinfo)
+	if updaterinfo then
+		updaterinfo = loadstring(updaterinfo.readAll())()
+		for k, v in pairs(updaterinfo.files) do
+			print("Downloading " .. v)
+			local file = http.get(url .. v)
+			if file then
+				-- It's the easiest way.
+				fs.delete(file)
+				fs.makeDir(file)
+				fs.delete(file)
+				local handle = fs.open(file, "w")
+				handle.write(file.readAll())
+				handle.close()
+				file.close()
+			else
+				error("Failed")
+			end
+			print("Installed")
+			print("Rebooting...")
+			sleep(1)
+			os.reboot()
+		end
+	else
+		error("Unable to get updater info")
+	end
+else
+	print("Not installing.")
+end

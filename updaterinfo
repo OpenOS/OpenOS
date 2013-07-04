@@ -1,0 +1,7 @@
+return {
+	-- Version format: major.minor.patch.hotfix
+	version = "0.0.0.0",
+	files = {
+		
+	}
+}
